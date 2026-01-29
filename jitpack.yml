@@ -5,5 +5,7 @@ before_install:
   - sdk use java 17.0.14-tem
   - sdk install maven
   - mvn -v
+  - find . -name "pom.xml" | xargs sed -i "s/<version>1.0.2<\/version>/<version>${VERSION}<\/version>/g"
+  - find . -name "pom.xml" | xargs sed -i "s/<groupId>io.jshift<\/groupId>/<groupId>com.github.naude-r.buildah-java<\/groupId>/g"
 install:
   - mvn install -Dmaven.javadoc.skip=true -DskipTests
