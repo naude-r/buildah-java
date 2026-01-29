@@ -21,6 +21,7 @@ public class BuildahBudCommand extends AbstractRunnableCommand<Void> {
     private static final String CPU_QUOTA = "--cpu-quota";
     private static final String BUILD_ARG = "--build-arg";
     private static final String BUILD_ARG_FMT = "%s=%s";
+    private static final String SQUASH = "--squash";
 
     List<String> dockerfileList;
     private String dockerfileContext;
@@ -35,6 +36,7 @@ public class BuildahBudCommand extends AbstractRunnableCommand<Void> {
     private String cpuPeriod;
     private String cpuQuota;
     private Map<String, String> buildArgs;
+    private Boolean squashFlag = Boolean.FALSE;
 
     private GlobalParametersSupport globalParametersSupport;
     protected BuildahBudCommand(CliExecutor buildahExecutor, String dockerfileContext) {
@@ -90,6 +92,10 @@ public class BuildahBudCommand extends AbstractRunnableCommand<Void> {
 
         if(tlsVerify != null && tlsVerify.booleanValue()) {
             arguments.add(TLS_VERIFY);
+        }
+
+        if(squashFlag != null && squashFlag.booleanValue()) {
+            arguments.add(SQUASH);
         }
 
         if(buildArgs != null) {
@@ -179,6 +185,11 @@ public class BuildahBudCommand extends AbstractRunnableCommand<Void> {
 
         public BuildahBudCommand.Builder buildArgs(Map<String, String> buildArgs) {
             this.buildahBudCommand.buildArgs = buildArgs;
+            return this;
+        }
+
+        public BuildahBudCommand.Builder squash(boolean squashFlag) {
+            this.buildahBudCommand.squashFlag = squashFlag;
             return this;
         }
 

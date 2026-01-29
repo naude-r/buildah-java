@@ -40,4 +40,14 @@ public class BudCommandTest {
         assertThat(cliCommand).containsExactly(transform("bud --tls-verify=false --build-arg TEST=TEST_VAL --file Dockerfile -t targetImg dockerFileContext"));
 
     }
+
+    @Test
+    public void should_add_squash_arg() {
+
+        List<String> dockerfileList = Collections.singletonList("Dockerfile");
+        final BuildahBudCommand buildahBudCommand = new BuildahBudCommand.Builder(buildahExecutor, "dockerFileContext").dockerfileList(dockerfileList).targetImage("targetImg").squash(true).build();
+        List<String> cliCommand = buildahBudCommand.getCliCommand();
+        assertThat(cliCommand).containsExactly(transform("bud --tls-verify=false --squash --file Dockerfile -t targetImg dockerFileContext"));
+
+    }
 }
